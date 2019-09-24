@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>无标题文档</title>
+    <style>
+        #div1 {width:100px; height:100px; background:red; position:absolute;}
+        #div2 {width:400px; height:500px; background:#CCC; position:relative;}
+    </style>
+    <script>
+        window.onload=function ()
+        {
+            var oDiv=document.getElementById('div1');
+            var oDiv2=document.getElementById('div2');
+
+            var disX=0;
+            var disY=0;
+
+            oDiv.onmousedown=function (ev)
+            {
+                var oEvent=ev||event;
+
+                disX=oEvent.clientX-oDiv.offsetLeft;//
+                disY=oEvent.clientY-oDiv.offsetTop;//这个是点击点距离div边框的距离
+
+                document.onmousemove=function (ev)
+                {
+                    var oEvent=ev||event;
+                    var l=oEvent.clientX-disX;//这个程序是为了让小div不离开大div的范围，所以本质来讲，就是把鼠标的有效移动范围控制在一个部分、这个就是为了求有效移动范围
+                    //但这个的内容是鼠标去除div外围之后的位置x，y轴
+                    var t=oEvent.clientY-disY;
+
+                    if(l<50)
+                    {
+                        l=0;
+                    }
+                    else if(l>oDiv2.offsetWidth-oDiv.offsetWidth-50)
+                    {
+                        l=oDiv2.offsetWidth-oDiv.offsetWidth;
+                    }
+
+                    if(t<50)
+                    {
+                        t=0;
+                    }
+                    else if(t>oDiv2.offsetHeight-oDiv.offsetHeight-50)
+                    {
+                        t=oDiv2.offsetHeight-oDiv.offsetHeight;
+                    }
+
+                    oDiv.style.left=l+'px';//上面的那些东西并没有被赋值进入odiv中，要靠这个方式来赋值
+
+                    oDiv.style.top=t+'px';
+                };
+
+                document.onmouseup=function ()
+                {
+                    document.onmousemove=null;
+                    document.onmouseup=null;
+                };
+
+                return false;
+            };
+        };
+    </script>
+</head>
+
+<body>
+<div id="div2">
+    <div id="div1"></div>
+</div>
+</body>
+</html>
