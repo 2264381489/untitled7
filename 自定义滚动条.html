@@ -63,7 +63,8 @@
                     var scale=l/(oParent.offsetWidth-oDiv.offsetWidth);
                     document.title=scale;
 
-                    oDiv3.style.top=-scale*(oDiv3.offsetHeight-oDiv2.offsetHeight)+'px';
+                    oDiv3.style.top=-scale*(oDiv3.offsetHeight-oDiv2.offsetHeight)+'px';//scale的内容是滑块（div1）运行过的轨迹在整个parent中占多少
+                    // 。比例。在下面的div嵌套中，提升里面div3的比例，就是从0到0.5到1，整个height就会渐渐增大，之后因为height的赠加，上面的内容会自动跟着升高的height往上面运动
 
                 };
 
